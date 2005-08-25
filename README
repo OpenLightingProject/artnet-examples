@@ -1,0 +1,57 @@
+
+This package provides example programs for use with libartnet.
+
+For installation notes, see the INSTALL file.
+
+Examples provided:
+
+ A. artnet-usb
+ B. artnet-dmxconsole
+ C. artnet-discover
+
+A. artnet-usb
+-------------
+
+Usage: artnet-usb [OPTIONS] 
+Acts as an ArtNet to DMX node using the Enttec Open Usb Interface
+
+ -a <ip-address>	IP address to listen on (defaults to the address
+                         of the first non loopback interface)
+ -d <dmx-device>	device for dmx output (default /dev/dmx0)
+ -p <port-address>	port address for output universe (default 0)
+ -s <subnet-address>	subnet address for output universe (default 0)
+ -v			be verbose (prints data for first four channels)
+
+The universe address of the port is made up from the subnet address and the
+port address. The four least significat bits are the port address, the four
+most significat are the subnet address.
+
+For example :
+
+artnet-usb -p 3 -s 2
+
+sets the universe address to 0x23
+
+
+B. artnet-dmxconsole
+--------------------
+Usage: artnet-dmxconsole [OPTIONS]
+A console based controller which outputs DMX data over ArtNet. 
+Modified from the original dmxconsole in dmx4linux.
+
+ -a <ip-address>        IP address to send from (defaults to the address
+                          of the first non loopback interface)
+ -p <port-address>      port address for universe (default 0)
+ -s <subnet-address>    subnet address for universe (default 0)
+
+
+C. artnet-discover
+------------------
+
+Usage: artnet-discover [OPTIONS]
+Prints information about ArtNet nodes
+
+ -a <ip-address>        IP address to use (defaults to the address
+                           of the first non loopback interface)
+ -t <seconds>		The number of seconds to wait for replies
+                           (defaults to 2 seconds)

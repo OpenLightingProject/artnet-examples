@@ -1,0 +1,19 @@
+13/04/2005 Simon Newton <nomis52@westnet.com.au>
+
+    * Mac OSX portability fixes
+
+12/03/2005 Simon Newton <nomis52@westnet.com.au>
+
+    * Split from libartnet
+    * Added node joining support, two nodes can now be joined to get 8 ports -
+ 	new example program artnet_multiport (you'll need to edit the second ip)
+
+12/02/2005 Simon Newton <nomis52@westnet.com.au>
+
+    * Fixed compiler warnings
+
+11/02/2005 Simon Newton <nomis52@westnet.com.au>
+
+    * Added firmware receive support - new example program artnet_firmware_node
+    * Added firmware send support - new example program artnet_firmware_server
+
