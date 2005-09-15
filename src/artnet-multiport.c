@@ -47,7 +47,7 @@ int verbose = 0;
 
 
 int dmx_callback(artnet_node n, int port, void *d) {
-	int8_t *data ;
+	uint8_t *data ;
 
 	data = artnet_read_dmx(n, port, &length) ;
 	memset(buff, 0x00, ARTNET_MAX_DMX+1) ;
