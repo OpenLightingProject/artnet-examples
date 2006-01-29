@@ -217,7 +217,7 @@ int firmware_complete_callback( artnet_node n, artnet_firmware_status_code  code
 /*
  * Read 
  */
-int handle_input(artnet_node n, options_t *options) {
+int server_handle_input(artnet_node n, options_t *options) {
 	char line[LINE] ;
 	artnet_node_entry ent ;
 	artnet_node_list nl = artnet_get_nl(n) ;
@@ -281,7 +281,7 @@ void wait_for_input(artnet_node n, options_t *options) {
 				break ;
 			default:
 				if(FD_ISSET(STDIN_FILENO, &rset) && ! options->uploading) {
-					if ( handle_input(n,options) ) 
+					if ( server_handle_input(n,options) ) 
 						return;
 											
 				} else {
