@@ -3,7 +3,7 @@
 
 AC_PREREQ(2.57)
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(artnet-examples, 0.3.3)
+AM_INIT_AUTOMAKE(artnet-examples, 0.3.6)
 AM_CONFIG_HEADER(config.h)
 
 # Checks for programs.
@@ -12,11 +12,14 @@ AC_PROG_INSTALL
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lncurses':
-AC_CHECK_LIB([ncurses], [initscr])
+AC_CHECK_LIB([ncurses], [initscr], [have_ncurses="yes"])
+AM_CONDITIONAL(HAVE_NCURSES, test "${have_ncurses}" = "yes")
 
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h malloc.h stdlib.h string.h sys/ioctl.h sys/time.h sys/timeb.h termios.h unistd.h])
+
+
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

@@ -1,3 +1,11 @@
+30/01/2006 Simon Newton <nomis52@westnet.com.au>
+
+    * Build scripts now detect ncurses
+
+30/01/2006 Simon Newton <nomis52@westnet.com.au>
+
+    * More OSX fixes
+    
 13/04/2005 Simon Newton <nomis52@westnet.com.au>
 
     * Mac OSX portability fixes

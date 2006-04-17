@@ -111,7 +111,6 @@ int main(int argc, char *argv[]) {
 	sd[0] = artnet_get_sd(node,0) ;
 	sd[1] = artnet_get_sd(node,1) ;
 
-	printf("prior \n") ;
 	if( artnet_send_poll(node, NULL, ARTNET_TTM_DEFAULT) != ARTNET_EOK) {
 		printf("send poll failed\n") ;
 		exit(1) ;

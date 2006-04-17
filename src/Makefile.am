@@ -3,9 +3,14 @@ AM_CFLAGS = -Wall -Werror
 AM_LDFLAGS = -LLIBDIR 
 
 
-bin_PROGRAMS = artnet_usb artnet_dmxconsole artnet_discover artnet_flood_rx artnet_flood_tx artnet_firmware_node artnet_firmware_server artnet_multiport artnet_profile_tx artnet_profile_rx artnet_rdm_output
+if HAVE_NCURSES
+NCURSES_PROGS = artnet_dmxconsole 
+artnet_dmxconsole_SOURCES = artnet-dmxconsole.c
+artnet_dmxconsole_LDADD = @LIBS@ -lartnet -lcurses
+endif
 
-#artnet_test_master artnet_test_slave
+
+bin_PROGRAMS = artnet_usb artnet_discover artnet_flood_rx artnet_flood_tx artnet_firmware_node artnet_firmware_server artnet_multiport artnet_profile_tx artnet_profile_rx artnet_rdm_output $(NCURSES_PROGS)
 
 artnet_usb_SOURCES = artnet-usb.c
 artnet_usb_LDADD = @LIBS@ -lartnet -lpthread
@@ -45,5 +50,3 @@ artnet_rdm_output_LDADD = @LIBS@ -lartnet
 #artnet_test_slave_LDADD = @LIBS@ -lartnet 
 
 
-artnet_dmxconsole_SOURCES = artnet-dmxconsole.c
-artnet_dmxconsole_LDADD = @LIBS@ -lartnet -lcurses
