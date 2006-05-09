@@ -10,7 +10,7 @@ artnet_dmxconsole_LDADD = @LIBS@ -lartnet -lcurses
 endif
 
 
-bin_PROGRAMS = artnet_usb artnet_discover artnet_flood_rx artnet_flood_tx artnet_firmware_node artnet_firmware_server artnet_multiport artnet_profile_tx artnet_profile_rx artnet_rdm_output $(NCURSES_PROGS)
+bin_PROGRAMS = artnet_usb artnet_discover artnet_flood_rx artnet_flood_tx artnet_firmware_node artnet_firmware_server artnet_multiport artnet_profile_tx artnet_profile_rx artnet_rdm_output artnet_setdmx $(NCURSES_PROGS)
 
 artnet_usb_SOURCES = artnet-usb.c
 artnet_usb_LDADD = @LIBS@ -lartnet -lpthread
@@ -42,6 +42,10 @@ artnet_multiport_LDADD = @LIBS@ -lartnet
 
 artnet_rdm_output_SOURCES = artnet-rdm-output.c
 artnet_rdm_output_LDADD = @LIBS@ -lartnet 
+
+
+artnet_setdmx_SOURCES = artnet-setdmx.c
+artnet_setdmx_LDADD = @LIBS@ -lartnet 
 
 #artnet_test_master_SOURCES = artnet-test-master.c artnet-test-defaults.h
 #artnet_test_master_LDADD = @LIBS@ -lartnet

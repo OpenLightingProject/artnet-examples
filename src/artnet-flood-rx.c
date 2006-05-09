@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 	artnet_node node ;
 	char *ip_addr = NULL ;
 	int optc, subnet_addr = 0, port_addr = 0 ;
-
+	
 	// parse options 
 	while ((optc = getopt (argc, argv, "s:p:d:a:v")) != EOF) {
 		switch (optc) {
@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
     	}
 	}
 
-    node = artnet_new(ip_addr, verbose) ; ;
+    node = artnet_new(ip_addr, verbose) ;
 
 	artnet_set_short_name(node, "Artnet -> DMX ") ;
 	artnet_set_long_name(node, "ArtNet Flood RX") ;

@@ -185,11 +185,7 @@ void read_firmware(char *firmware, options_t *options ) {
  */
 void scan_for_nodes(artnet_node n) {
 	#define WAIT_TIME 2
-	int sd[2] ;
 	time_t start ;
-
-	sd[0] = artnet_get_sd(n,0) ;
-	sd[1] = artnet_get_sd(n,1) ;
 
 	start = time(NULL) ;
 	
@@ -255,19 +251,17 @@ int server_handle_input(artnet_node n, options_t *options) {
  *
  */
 void wait_for_input(artnet_node n, options_t *options) {
-	int sd[2], maxsd;
+	int sd, maxsd;
 	fd_set rset;
 	struct timeval tv;
 
-	sd[0] = artnet_get_sd(n,0) ;
-	sd[1] = artnet_get_sd(n,1) ;
-	maxsd = sd[0] > sd[1] ? sd[0] : sd[1] ;
+	sd = artnet_get_sd(n) ;
+	maxsd = sd ;
 	
 	while(1) {
 		FD_ZERO(&rset) ;
 		FD_SET(STDIN_FILENO, &rset) ;
-		FD_SET(sd[0], &rset) ;
-		FD_SET(sd[1], &rset) ;
+		FD_SET(sd, &rset) ;
 		
 		tv.tv_usec = 0 ;
 		tv.tv_sec = 1 ;

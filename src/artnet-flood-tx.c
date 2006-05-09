@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 	int optc,  subnet_addr = 0, port_addr = 0 ;
 	uint8_t data[ARTNET_DMX_LENGTH] ;
 	struct timeval tv;
-	int sd[2], maxsd ;
+	int sd, maxsd ;
 	fd_set rset;
 	struct timespec ts;
 
@@ -96,20 +96,17 @@ int main(int argc, char *argv[]) {
 	artnet_set_port_addr(node, 0, ARTNET_INPUT_PORT, port_addr) ;
 	artnet_start(node) ;
 	
-
-	sd[0] = artnet_get_sd(node,0) ;
-	sd[1] = artnet_get_sd(node,1) ;
+	sd = artnet_get_sd(node) ;
 
 	if(use_select) {
 		while(1) {
 			FD_ZERO(&rset) ;
-			FD_SET(sd[0], &rset) ;
-			FD_SET(sd[1], &rset) ;
+			FD_SET(sd, &rset) ;
 
 			tv.tv_usec = delay ;
 			tv.tv_sec = 0 ;
 		
-			maxsd = sd[0] > sd[1] ? sd[0] : sd[1] ;
+			maxsd = sd ;
 	
 			switch ( select( maxsd+1, &rset, NULL, NULL, &tv ) ) {
 				case 0:

@@ -1,5 +1,10 @@
 13/04/2005 artnet-examples-0.3.2
 
+ Addition of artnet_setdmx
+ Upgraded examples to support compatability mode (libartnet >= 1.0.2)
+
+13/04/2005 artnet-examples-0.3.2
+
  Mac OS X fixes
 
 12/03/2005 artnet-examples-0.3.1

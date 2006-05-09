@@ -553,8 +553,8 @@ int main (int argc, char *argv[])
   int optc, subnet_addr = 0 , port_addr = 0 ;
   const char *f ;
   char *ip_addr = NULL ;
-
-  int an_sd[2] ;
+	
+  int an_sd ;
   int sigcrash[] = {
     //SIGABRT, 
     //SIGALRM,
@@ -680,8 +680,7 @@ int main (int argc, char *argv[])
   artnet_start(node) ;
 
   // store the sds
-  an_sd[0] = artnet_get_sd(node,0) ;
-  an_sd[1] = artnet_get_sd(node,1) ;
+  an_sd = artnet_get_sd(node) ;
   
   /* init curses */
   w = initscr();
@@ -704,21 +703,18 @@ int main (int argc, char *argv[])
   c=0;
   while (c!='q')
     {
-      int n, max;
+      int n;
       fd_set rd_fds;
       struct timeval tv;
 
       FD_ZERO(&rd_fds);
       FD_SET(0, &rd_fds);
-      FD_SET(an_sd[0], &rd_fds) ;
-      FD_SET(an_sd[1], &rd_fds) ;
+      FD_SET(an_sd, &rd_fds) ;
 
-      max = an_sd[0] > an_sd[1] ? an_sd[0] : an_sd[1] ;
-      
       tv.tv_sec = 1;
       tv.tv_usec = 0;
 
-      n = select(max+1, &rd_fds, NULL, NULL, &tv);
+      n = select(an_sd+1, &rd_fds, NULL, NULL, &tv);
       if(n>0)
         {
           if(FD_ISSET(0, &rd_fds))
@@ -897,16 +893,16 @@ int main (int argc, char *argv[])
 		  break;
 
 		}
-            }
+	}
 
-          if (FD_ISSET(an_sd[0], &rd_fds) || FD_ISSET(an_sd[1],&rd_fds) )
-	    artnet_read(node,0);
+	if (FD_ISSET(an_sd, &rd_fds))
+		artnet_read(node,0);
 
-        }
 
       values();
       refresh();
     }
+   }
 
   return 0;
 }

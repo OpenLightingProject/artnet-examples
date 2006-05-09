@@ -68,7 +68,7 @@ int reply_handler(artnet_node n, void *pp, void *d) {
 int main(int argc, char *argv[]) {
 	artnet_node node ;
 	char *ip_addr = NULL ;
-	int optc, sd[2], maxsd, timeout = 2;
+	int optc, sd, maxsd, timeout = 2;
 	fd_set rset;
 	struct timeval tv;
 	time_t start ;
@@ -95,7 +95,6 @@ int main(int argc, char *argv[]) {
 		goto error ;
 	}
 
-	
 	artnet_set_short_name(node, "artnet-discovery") ;
 	artnet_set_long_name(node, "ArtNet Discovery Node") ;
 	artnet_set_node_type(node, ARTNET_SRV) ;
@@ -108,8 +107,7 @@ int main(int argc, char *argv[]) {
 		goto error_destroy ;
 	}
 
-	sd[0] = artnet_get_sd(node,0) ;
-	sd[1] = artnet_get_sd(node,1) ;
+	sd = artnet_get_sd(node) ;
 
 	if( artnet_send_poll(node, NULL, ARTNET_TTM_DEFAULT) != ARTNET_EOK) {
 		printf("send poll failed\n") ;
@@ -120,12 +118,11 @@ int main(int argc, char *argv[]) {
 	// wait for timeout seconds before quitting
 	while(time(NULL) - start < timeout) {
 		FD_ZERO(&rset) ;
-		FD_SET(sd[0], &rset) ;
-		FD_SET(sd[1], &rset) ;
+		FD_SET(sd, &rset) ;
 
 		tv.tv_usec = 0 ;
 		tv.tv_sec = 1 ;
-		maxsd = sd[0] > sd[1] ? sd[0] : sd[1] ;
+		maxsd = sd ;
 	
 		switch ( select( maxsd+1, &rset, NULL, NULL, &tv ) ) {
 			case 0:

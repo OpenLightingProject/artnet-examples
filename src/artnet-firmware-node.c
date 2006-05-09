@@ -50,7 +50,7 @@ int firmware_handler(artnet_node n, int ubea, uint16_t *data, int length, void *
 int main(int argc, char *argv[]) {
 	artnet_node node ;
 	char *ip_addr = NULL ;
-	int optc, sd[2],  timeout = 2;
+	int optc,  timeout = 2;
 	time_t start ;
 	
 	// parse options 
@@ -80,9 +80,6 @@ int main(int argc, char *argv[]) {
 	artnet_set_firmware_handler(node, firmware_handler, NULL) ;
 
 	artnet_start(node) ;
-
-	sd[0] = artnet_get_sd(node,0) ;
-	sd[1] = artnet_get_sd(node,1) ;
 
 	start = time(NULL) ;
 

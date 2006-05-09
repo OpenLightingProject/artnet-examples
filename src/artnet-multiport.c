@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
 	artnet_node node1, node2 ;
 	char *ip_addr = NULL ;
 	int i, optc, subnet_addr = 0, port_addr = 0 ;
-	int sd[4],  maxsd;
+	int sd[2],  maxsd;
 	fd_set rset;
 	struct timeval tv;
 
@@ -127,21 +127,15 @@ int main(int argc, char *argv[]) {
 	artnet_start(node1) ;
 	artnet_start(node2) ;
 
-	sd[0] = artnet_get_sd(node1,0) ;
-	sd[1] = artnet_get_sd(node1,1) ;
-	sd[2] = artnet_get_sd(node2,0) ;
-	sd[3] = artnet_get_sd(node2,1) ;
+	sd[0] = artnet_get_sd(node1) ;
+	sd[1] = artnet_get_sd(node2) ;
 
 	maxsd = sd[0] > sd[1] ? sd[0] : sd[1] ;
-	maxsd = maxsd > sd[2] ? maxsd : sd[2] ;
-	maxsd = maxsd > sd[3] ? maxsd : sd[3] ;
 
 	while(1) {
 		FD_ZERO(&rset) ;
 		FD_SET(sd[0], &rset) ;
 		FD_SET(sd[1], &rset) ;
-		FD_SET(sd[2], &rset) ;
-		FD_SET(sd[3], &rset) ;
 		
 		tv.tv_usec = 0 ;
 		tv.tv_sec = 1 ;
@@ -154,13 +148,11 @@ int main(int argc, char *argv[]) {
 			 	printf("select error\n") ;
 				break ;
 			default:
-				// crap this is an issue,
-				// if we had multicast it would solve this problem
-				// as long as each port id was unique
 				
-				if(FD_ISSET(sd[0], &rset) || FD_ISSET(sd[1], &rset) ) {
+				// these are the same descriptors anyway
+				if(FD_ISSET(sd[0], &rset) ) {
 					artnet_read(node1,0) ;
-				} else if(FD_ISSET(sd[2], &rset) || FD_ISSET(sd[3], &rset) ){
+				} else if(FD_ISSET(sd[1], &rset) ){
 					artnet_read(node2,0) ;
 				} else {
 					printf("random!!!\n") ;
