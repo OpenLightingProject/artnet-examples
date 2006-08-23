@@ -70,7 +70,6 @@ pthread_mutex_t mem_mutex = PTHREAD_MUTEX_INITIALIZER ;
 int do_write(opts_t *ops, int pid, uint8_t *buf, int length) {
 	int res ;
 
-	printf("writing to %d\n", ops->fd[pid]) ;
 	res = write(ops->fd[pid], buf, length);
 
 	if (res < 0){
@@ -146,7 +145,7 @@ int dmx_handler(artnet_node n, int port, void *d) {
 	if(port < ops->num_ports) {
 		data = artnet_read_dmx(n, port, &len) ;
 		pthread_mutex_lock(&mem_mutex) ;
-		memcpy(ops->dmx[port], data, len) ;
+		memcpy(&ops->dmx[port][1], data, len) ;
 		pthread_mutex_unlock(&mem_mutex) ;
 	}
 	return 0;
@@ -199,7 +198,7 @@ int load_config(opts_t *ops) {
 
 		// strip \n
 		for(c = buf ; *c != '\n' ; c++) ;
-		*c = '\0' ;
+			*c = '\0' ;
 
 		key = strtok(buf, "=") ;
 		data = strtok(NULL, "=") ;
