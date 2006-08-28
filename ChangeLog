@@ -1,3 +1,7 @@
+238/8/2006 Simon Newton <nomis52@westnet.com.au>
+
+	* added artnet_dmxmonitor
+
 23/8/2006 Simon Newton <nomis52@westnet.com.au>
 
 	* fixed off by one error in artnet-usb
