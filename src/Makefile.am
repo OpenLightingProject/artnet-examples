@@ -4,9 +4,13 @@ AM_LDFLAGS = -LLIBDIR
 
 
 if HAVE_NCURSES
-NCURSES_PROGS = artnet_dmxconsole 
+NCURSES_PROGS = artnet_dmxconsole artnet_dmxmonitor
 artnet_dmxconsole_SOURCES = artnet-dmxconsole.c
 artnet_dmxconsole_LDADD = @LIBS@ -lartnet -lcurses
+
+
+artnet_dmxmonitor_SOURCES = artnet-dmxmonitor.c
+artnet_dmxmonitor_LDADD = @LIBS@ -lartnet -lcurses
 endif
 
 
