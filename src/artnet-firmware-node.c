@@ -72,6 +72,7 @@ int main(int argc, char *argv[]) {
 
     node = artnet_new(ip_addr, verbose) ; ;
 
+
 	artnet_set_short_name(node, "artnet-firmware") ;
 	artnet_set_long_name(node, "ArtNet Firmware Test Node") ;
 	artnet_set_node_type(node, ARTNET_NODE) ;

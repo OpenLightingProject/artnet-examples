@@ -1,3 +1,8 @@
+23/8/2006 Simon Newton <nomis52@westnet.com.au>
+
+	* fixed off by one error in artnet-usb
+
+
 9/05/2006 Simon Newton <nomis52@westnet.com.au>
 
 	* removed compat mode
