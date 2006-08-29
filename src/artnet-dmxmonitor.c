@@ -86,8 +86,6 @@ static int channels_offset=1;
 
 WINDOW  *w=NULL;
 static artnet_node node ;
-static uint8_t	group ;
-static uint8_t universe = 0;
 
 
 /* display the channels numbers */
@@ -134,13 +132,6 @@ void values() {
 
       attrset(palette[HEADLINE]);
       mvprintw(0,1,"%s", s);
-    }
-  if(COLS>31)
-    {
-      attrset(palette[HEADLINE]);
-      printw(" Universe:");
-      attrset(palette[HEADEMPH]);
-      printw("%02i", universe);
     }
 
   /* values */
@@ -353,7 +344,7 @@ int main (int argc, char *argv[]) {
 	memset(dmx, 0x00, MAXCHANNELS) ;
 
 	// parse options 
-	while ((optc = getopt (argc, argv, "a:u:g:")) != EOF) {
+	while ((optc = getopt (argc, argv, "s:p:a:")) != EOF) {
 		switch (optc) {
 	        case 'a':
 		          ip_addr = (char *) strdup(optarg) ;
@@ -375,12 +366,6 @@ int main (int argc, char *argv[]) {
 		         }
 		         break ;
 
-			case 'u':
-				universe= atoi(optarg) ;
-				break ;
-			case 'g':
-				group = atoi(optarg) ;
-				break;
 			default:
 				break;
 		}
