@@ -20,6 +20,8 @@ AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h malloc.h stdlib.h string.h sys/ioctl.h sys/time.h sys/timeb.h termios.h unistd.h])
 
 
+# check for libartnet
+AC_CHECK_LIB(artnet, artnet_new,[have_artnet="yes"], AC_MSG_ERROR(Couldn't find libartnet - is it installed?) )
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
