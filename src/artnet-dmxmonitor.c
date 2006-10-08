@@ -517,7 +517,7 @@ int main (int argc, char *argv[]) {
 				}
 			}
 
-			if (FD_ISSET(artnet_sd , &rd_fds)  , &rd_fds )
+			if (FD_ISSET(artnet_sd , &rd_fds)  )
 	    		artnet_read(node,0);
 		}
 
