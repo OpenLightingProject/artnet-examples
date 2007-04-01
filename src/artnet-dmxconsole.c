@@ -661,7 +661,7 @@ int main (int argc, char *argv[])
   node = artnet_new(ip_addr, verbose) ; ;
 	
   if(node == NULL) {
-	printf ("Unable to set up artnet node\n") ;
+	printf ("Unable to set up artnet node: %s\n", artnet_strerror() ) ;
 	return 1 ;
   }
 
