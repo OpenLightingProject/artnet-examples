@@ -73,7 +73,7 @@ int MAXFKEY=12;
 
 int verbose = 0;
 
-typedef unsigned char dmx_t ;
+typedef unsigned char dmx_t;
 
 static dmx_t *dmx;
 static dmx_t *dmxsave;
@@ -93,7 +93,7 @@ static int palette[MAXCOLOR];
 static char *errorstr=NULL;
 static int channels_offset=1;
 
-static artnet_node node ;
+static artnet_node node;
 
 void DMXsleep(int usec)
 {
@@ -108,11 +108,11 @@ void DMXsleep(int usec)
 unsigned long timeGetTime()
 {
 #ifdef HAVE_GETTIMEOFDAY
-  struct timeval tv ;
-  gettimeofday(&tv, NULL) ;	
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
   return (unsigned long)tv.tv_sec*1000UL+ (unsigned long)tv.tv_usec/1000;
 
-#else 
+#else
 # ifdef HAVE_FTIME
   struct timeb t;
   ftime(&t);
@@ -128,13 +128,13 @@ unsigned long timeGetTime()
 /* set all DMX channels */
 void setall()
 {
-	artnet_send_dmx(node,0,MAXCHANNELS, dmx) ;
+  artnet_send_dmx(node,0,MAXCHANNELS, dmx);
 }
 
 /* set current DMX channel */
 void set()
 {
-	setall() ;
+  setall();
 }
 
 
@@ -157,14 +157,14 @@ void mask()
     {
       move(y,0);
       for(x=0; x<channels_per_line && z<MAXCHANNELS && i<channels_per_screen; x++, i++, z++)
-	switch(display_mode)
+    switch(display_mode)
 	  {
 	  case DISP_MODE_DMX:
 	  case DISP_MODE_DEC:
 	  default:
 	    printw("%03d ",z+channels_offset); break;
 
-	  case DISP_MODE_HEX: 
+	  case DISP_MODE_HEX:
 	    printw("%03X ",z+channels_offset); break;
 	  }
     }
@@ -208,7 +208,7 @@ void values()
 	{
 	  attrset(palette[HEADLINE]);
 	  printw(" fading:");
-	  
+
 	  attrset(palette[HEADEMPH]);
 	  printw("%02i%%", (fading<100)?fading:99);
 	}
@@ -243,7 +243,7 @@ void values()
 	    attron(A_REVERSE);
 	  switch(display_mode)
 	    {
-	    case DISP_MODE_HEX: 
+	    case DISP_MODE_HEX:
 	      if(d==0)
 		addstr("    ");
 	      else
@@ -331,13 +331,13 @@ void crossfade(int new_cue)
 	    if(dmxold[i] || dmxnew[i]) /* avoid calculating with only 0 */
 	      dmx[i]=(int)((float)dmxold[i]*q + (float)dmxnew[i]*p);
 	  setall();
-	  
+
 	  /* update screen */
 	  fading=(int)(p*100.0f);
 	  values();
 	  refresh();
 	  DMXsleep(100000);
-	  
+
 	  t=timeGetTime();		/* get current time, because the last time is too old (due to the sleep) */
 	}
       }
@@ -358,14 +358,14 @@ void save(const char *filename)
   else
     {
       if(fwrite(dmxsave, MAXCHANNELS, MAXFKEY, file) != MAXFKEY)
-	errorstr="could not write complete savefile";
+      errorstr="could not write complete savefile";
       fprintf(file, "\nfadetime %i\n", (int)(fadetime*1000.0f));
       fprintf(file, "current_cue %i\n", current_cue);
       fprintf(file, "current_channel %i\n", current_channel);
       fprintf(file, "first_channel %i\n", first_channel);
       fprintf(file, "palette_number %i\n", palette_number);
       if(fclose(file) < 0)
-	errorstr="could not close savefile";
+        errorstr="could not close savefile";
     }
 }
 
@@ -416,27 +416,27 @@ void undoprep()
 /* change palette to "p". If p is invalid new palette is number "0". */
 void changepalette(int p)
 {
-  /* COLOR_BLACK 
-     COLOR_RED 
-     COLOR_GREEN 
-     COLOR_YELLOW 
-     COLOR_BLUE 
-     COLOR_MAGENTA 
-     COLOR_CYAN 
+  /* COLOR_BLACK
+     COLOR_RED
+     COLOR_GREEN
+     COLOR_YELLOW
+     COLOR_BLUE
+     COLOR_MAGENTA
+     COLOR_CYAN
      COLOR_WHITE
 
-     A_NORMAL    
+     A_NORMAL
      A_ATTRIBUTES
-     A_CHARTEXT  
-     A_COLOR	    
-     A_STANDOUT  
-     A_UNDERLINE 
-     A_REVERSE   
-     A_BLINK	    
-     A_DIM	    
-     A_BOLD	    
+     A_CHARTEXT
+     A_COLOR
+     A_STANDOUT
+     A_UNDERLINE
+     A_REVERSE
+     A_BLINK
+     A_DIM
+     A_BOLD
      A_ALTCHARSET
-     A_INVIS	    
+     A_INVIS
   */
   switch(p)
     {
@@ -541,7 +541,7 @@ void cleanup()
       endwin();
     }
 
-  artnet_stop(node) ;
+  artnet_stop(node);
 
   if(errorstr)
     puts(errorstr);
@@ -550,13 +550,14 @@ void cleanup()
 int main (int argc, char *argv[])
 {
   int c=0;
-  int optc, subnet_addr = 0 , port_addr = 0 ;
-  const char *f ;
-  char *ip_addr = NULL ;
-	
-  int an_sd ;
+  int optc, subnet_addr = 0, port_addr = 0;
+  int bcast_limit = 0;
+  const char *f;
+  char *ip_addr = NULL;
+
+  int an_sd;
   int sigcrash[] = {
-    //SIGABRT, 
+    //SIGABRT,
     //SIGALRM,
     SIGBUS,
     //SIGCHLD,
@@ -596,7 +597,7 @@ int main (int argc, char *argv[])
     //SIGVTALRM,
     //SIGWINCH,
     SIGXCPU,
-    SIGXFSZ, 
+    SIGXFSZ,
   };
 
   /* install signal handler */
@@ -616,36 +617,39 @@ int main (int argc, char *argv[])
   dmxundo=calloc(MAXCHANNELS, sizeof(dmx_t));
   CHECK(dmxundo);
 
-  // parse options 
-  while ((optc = getopt (argc, argv, "va:p:s:")) != EOF) {
+  // parse options
+  while ((optc = getopt (argc, argv, "va:b:p:s:")) != EOF) {
     switch (optc) {
       case 'a':
-        ip_addr = (char *) strdup(optarg) ;
+        ip_addr = (char *) strdup(optarg);
+        break;
+      case 'b':
+        bcast_limit = atoi(optarg);
         break;
       case 's':
-         subnet_addr = atoi(optarg) ;
+         subnet_addr = atoi(optarg);
 
          if(subnet_addr < 0 && subnet_addr > 15) {
-           printf("Subnet address must be between 0 and 15\n") ;
-           exit(1) ;
+           printf("Subnet address must be between 0 and 15\n");
+           exit(1);
          }
-         break ;
+         break;
       case 'p':
-         port_addr = atoi(optarg) ;
+         port_addr = atoi(optarg);
 
          if(port_addr < 0 && port_addr > 15) {
-           printf("Port address must be between 0 and 15\n") ;
-           exit(1) ;
+           printf("Port address must be between 0 and 15\n");
+           exit(1);
          }
-         break ;
+         break;
 	  case 'v':
-		 verbose = 1 ;
-		 break ;
+		 verbose = 1;
+		 break;
       default:
          break;
     }
   }
-  
+
   /* check for file to load  */
   if (optind < argc) {
      f=argv[optind];
@@ -658,30 +662,31 @@ int main (int argc, char *argv[])
   }
 
   /* set up artnet node */
-  node = artnet_new(ip_addr, verbose) ; ;
-	
+  node = artnet_new(ip_addr, verbose);;
+
   if(node == NULL) {
-	printf ("Unable to set up artnet node: %s\n", artnet_strerror() ) ;
-	return 1 ;
+	printf ("Unable to set up artnet node: %s\n", artnet_strerror() );
+	return 1;
   }
 
   // set names and node type
-  artnet_set_short_name(node, "DMX Console ") ;
-  artnet_set_long_name(node, "ArtNet DMX Console for Linux") ;
-  artnet_set_node_type(node, ARTNET_SRV) ;
-  
-  artnet_set_subnet_addr(node, subnet_addr) ;
-  
+  artnet_set_short_name(node, "DMX Console ");
+  artnet_set_long_name(node, "ArtNet DMX Console for Linux");
+  artnet_set_node_type(node, ARTNET_SRV);
+
+  artnet_set_subnet_addr(node, subnet_addr);
+
   // enable the first input port (1 universe only)
-  artnet_set_port_type(node, 0, ARTNET_ENABLE_INPUT, ARTNET_PORT_DMX) ;
+  artnet_set_port_type(node, 0, ARTNET_ENABLE_INPUT, ARTNET_PORT_DMX);
   artnet_set_port_addr(node, 0, ARTNET_INPUT_PORT, port_addr);
-  
-  //start the node 
-  artnet_start(node) ;
+  artnet_set_bcast_limit(node, bcast_limit);
+
+  //start the node
+  artnet_start(node);
 
   // store the sds
-  an_sd = artnet_get_sd(node) ;
-  
+  an_sd = artnet_get_sd(node);
+
   /* init curses */
   w = initscr();
   if (!w)
@@ -709,7 +714,7 @@ int main (int argc, char *argv[])
 
       FD_ZERO(&rd_fds);
       FD_SET(0, &rd_fds);
-      FD_SET(an_sd, &rd_fds) ;
+      FD_SET(an_sd, &rd_fds);
 
       tv.tv_sec = 1;
       tv.tv_usec = 0;
@@ -739,7 +744,7 @@ int main (int argc, char *argv[])
 		    }
 		  set();
 		  break;
-	      
+
 		case KEY_NPAGE:
 		  undoprep();
 		  if(dmx[current_channel]==255)

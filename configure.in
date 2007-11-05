@@ -21,7 +21,7 @@ AC_CHECK_HEADERS([fcntl.h malloc.h stdlib.h string.h sys/ioctl.h sys/time.h sys/
 
 
 # check for libartnet
-PKG_CHECK_MODULES(libartnet, [libartnet >= 1.0.4])
+PKG_CHECK_MODULES(libartnet, [libartnet >= 1.0.6])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
