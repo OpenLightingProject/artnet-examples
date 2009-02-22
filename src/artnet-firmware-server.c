@@ -220,7 +220,10 @@ int server_handle_input(artnet_node n, options_t *options) {
   int i = 0;
   int index;
 
-  fgets(line, LINE, stdin);
+  if (fgets(line, LINE, stdin) == NULL) {
+    printf("Unable to read from stdin\n");
+    return 0;
+  }
   index = atoi(line);
 
   if(0 == strcmp( line ,"q\n") ) {
