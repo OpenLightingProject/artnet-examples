@@ -3,6 +3,7 @@
 
 AC_PREREQ(2.57)
 AC_INIT(configure.in)
+AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE(artnet-examples, 0.3.10)
 AM_CONFIG_HEADER(config.h)
 
