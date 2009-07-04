@@ -32,7 +32,6 @@
 #include <pthread.h>
 #include <errno.h>
 #include <artnet/artnet.h>
-#include <artnet/packets.h>
 
 #define DEFAULT_DEVICE "/dev/dmx0"
 #define DEFAULT_DEVICE2 "/dev/dmx1"
