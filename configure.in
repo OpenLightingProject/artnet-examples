@@ -36,4 +36,4 @@ AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([gettimeofday atexit ftime memset select strdup strerror])
 
-AC_OUTPUT(Makefile src/Makefile)
+AC_OUTPUT(Makefile debian/Makefile src/Makefile)
