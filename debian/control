@@ -3,7 +3,7 @@ Section: electronics
 Priority: optional
 Maintainer: Simon Newton <nomis52@gmail.com>
 Build-Depends: debhelper (>= 7), autotools-dev
-Standards-Version: 3.7.3
+Standards-Version: 3.8.0
 Homepage: http://code.google.com/p/linux-lighting/
 
 Package: artnet-examples
