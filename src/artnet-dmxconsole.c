@@ -377,7 +377,10 @@ void load(const char *filename)
       fprintf(stderr, "unable to open %s : %s\n", filename, strerror(errno));
       exit(1);
     }
-  fread(dmxsave, MAXCHANNELS, MAXFKEY, file);
+  if (MAXCHANNELS != fread(dmxsave, MAXCHANNELS, MAXFKEY, file)) {
+    fprintf(stderr, "Failed to read %s\n", filename);
+    exit(1);
+  }
   while(!feof(file))
     {
       char buf[1024];

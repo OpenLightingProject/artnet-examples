@@ -1,21 +1,24 @@
 
-AM_CFLAGS = -Wall -Werror 
-AM_LDFLAGS = $(libartnet_LIBS)
+AM_CFLAGS = -Wall -Werror
+LDADD = $(libartnet_LIBS)
 
 if HAVE_NCURSES
 NCURSES_PROGS = artnet_dmxconsole artnet_dmxmonitor
 artnet_dmxconsole_SOURCES = artnet-dmxconsole.c
-artnet_dmxconsole_LDADD = @LIBS@ -lcurses
+artnet_dmxconsole_LDADD = $(libartnet_LIBS) -lcurses
 
 artnet_dmxmonitor_SOURCES = artnet-dmxmonitor.c
-artnet_dmxmonitor_LDADD = @LIBS@ -lcurses
+artnet_dmxmonitor_LDADD = $(libartnet_LIBS) -lcurses
 endif
 
 
-bin_PROGRAMS = artnet_usb artnet_discover artnet_flood_rx artnet_flood_tx artnet_firmware_node artnet_firmware_server artnet_multiport artnet_profile_tx artnet_profile_rx artnet_rdm_output artnet_setdmx $(NCURSES_PROGS)
+bin_PROGRAMS = artnet_usb artnet_discover artnet_flood_rx artnet_flood_tx \
+               artnet_firmware_node artnet_firmware_server artnet_multiport \
+               artnet_profile_tx artnet_profile_rx artnet_rdm_output \
+               artnet_setdmx $(NCURSES_PROGS)
 
 artnet_usb_SOURCES = artnet-usb.c
-artnet_usb_LDADD = @LIBS@ -lpthread
+artnet_usb_LDADD = $(libartnet_LIBS) -lpthread
 artnet_discover_SOURCES = artnet-discover.c
 artnet_flood_rx_SOURCES = artnet-flood-rx.c
 artnet_flood_tx_SOURCES = artnet-flood-tx.c

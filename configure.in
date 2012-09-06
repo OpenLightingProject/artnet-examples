@@ -4,7 +4,7 @@
 AC_PREREQ(2.57)
 AC_INIT(configure.in)
 AC_CONFIG_AUX_DIR(config)
-AM_INIT_AUTOMAKE(artnet-examples, 0.3.10)
+AM_INIT_AUTOMAKE(artnet-examples, 0.3.12)
 AM_CONFIG_HEADER(config.h)
 
 # Checks for programs.
@@ -20,9 +20,8 @@ AM_CONDITIONAL(HAVE_NCURSES, test "${have_ncurses}" = "yes")
 AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h malloc.h stdlib.h string.h sys/ioctl.h sys/time.h sys/timeb.h termios.h unistd.h])
 
-
 # check for libartnet
-PKG_CHECK_MODULES(libartnet, [libartnet >= 1.0.6])
+PKG_CHECK_MODULES(libartnet, [libartnet >= 1.1.0])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -37,4 +36,4 @@ AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([gettimeofday atexit ftime memset select strdup strerror])
 
-AC_OUTPUT(Makefile debian/Makefile src/Makefile)
+AC_OUTPUT(Makefile src/Makefile)
