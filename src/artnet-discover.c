@@ -36,10 +36,10 @@ void print_node_config(artnet_node_entry ne) {
   printf("Short Name:   %s\n", ne->shortname);
   printf("Long Name:    %s\n", ne->longname);
   printf("Node Report:  %s\n", ne->nodereport);
-  printf("Subnet:       0x%hhx\n", ne->sub);
+  printf("Subnet:       0x%02x\n", ne->sub);
   printf("Numb Ports:   %d\n", ne->numbports);
-  printf("Input Addrs:  0x%hhx, 0x%hhx, 0x%hhx, 0x%hhx\n", ne->swin[0], ne->swin[1], ne->swin[2], ne->swin[3] );
-  printf("Output Addrs: 0x%hhx, 0x%hhx, 0x%hhx, 0x%hhx\n", ne->swout[0], ne->swout[1], ne->swout[2], ne->swout[3] );
+  printf("Input Addrs:  0x%02x, 0x%02x, 0x%02x, 0x%02x\n", ne->swin[0], ne->swin[1], ne->swin[2], ne->swin[3] );
+  printf("Output Addrs: 0x%02x, 0x%02x, 0x%02x, 0x%02x\n", ne->swout[0], ne->swout[1], ne->swout[2], ne->swout[3] );
   printf("----------------------------------\n");
 }
 

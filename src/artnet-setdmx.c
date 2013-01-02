@@ -26,8 +26,12 @@
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
+#ifndef WIN32
 #include <sys/wait.h>
 #include <sys/time.h>
+#else
+#include <windows.h>
+#endif
 #include <time.h>
 #include <getopt.h>
 #include <errno.h>
@@ -147,17 +151,27 @@ void display_help_and_exit(opts_t *ops, char *argv[]) {
 }
 
 void msleep(long time) {
+#ifndef WIN32
   struct timespec ts;
   ts.tv_sec = 0;
   ts.tv_nsec = 1000000*time;
   nanosleep(&ts, NULL);
+ #else
+  Sleep(time);
+ #endif
 }
 
 // returns the time in milliseconds
 unsigned long timeGetTime() {
+#ifndef WIN32
   struct timeval tv;
   gettimeofday(&tv, NULL);
-  return (unsigned long)tv.tv_sec*1000UL+ (unsigned long)tv.tv_usec/1000;
+  return (unsigned long)tv.tv_sec*1000UL + (unsigned long)tv.tv_usec/1000;
+#else
+  SYSTEMTIME st;
+  GetSystemTime(&st);
+  return (unsigned long)st.wSecond*1000UL + (unsigned long)st.wMilliseconds;
+#endif
 }
 
 /*
