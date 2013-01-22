@@ -11,11 +11,14 @@ artnet_dmxmonitor_SOURCES = artnet-dmxmonitor.c
 artnet_dmxmonitor_LDADD = $(libartnet_LIBS) -lcurses
 endif
 
+if OS_LINUX
+ARTNET_USB = artnet_usb
+endif
 
-bin_PROGRAMS = artnet_usb artnet_discover artnet_flood_rx artnet_flood_tx \
+bin_PROGRAMS = artnet_discover artnet_flood_rx artnet_flood_tx \
                artnet_firmware_node artnet_firmware_server artnet_multiport \
                artnet_profile_tx artnet_profile_rx artnet_rdm_output \
-               artnet_setdmx $(NCURSES_PROGS)
+               artnet_setdmx $(NCURSES_PROGS) $(ARTNET_USB)
 
 artnet_usb_SOURCES = artnet-usb.c
 artnet_usb_LDADD = $(libartnet_LIBS) -lpthread
