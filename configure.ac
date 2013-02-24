@@ -5,7 +5,7 @@ AC_PREREQ(2.57)
 AC_INIT(configure.ac)
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE(artnet-examples, 0.3.12)
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS(config.h)
 
 # Checks for programs.
 AC_PROG_CC
