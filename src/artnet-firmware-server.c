@@ -239,8 +239,10 @@ int server_handle_input(artnet_node n, options_t *options) {
         break;
     }
 
-    if(ent != NULL)
+    if(ent != NULL) {
+      options->uploading = 1;
       artnet_send_firmware(n, ent, options->ubea, options->buffer, options->size / sizeof(uint16_t), firmware_complete_callback, (void *) options);
+    }
 
   } else {
     printf("Invalid Command\n");
@@ -259,7 +261,7 @@ void wait_for_input(artnet_node n, options_t *options) {
   struct timeval tv;
 
   sd = artnet_get_sd(n);
-  maxsd = sd;
+  maxsd = sd + 1;
 
   while(1) {
     FD_ZERO(&rset);
@@ -289,7 +291,6 @@ void wait_for_input(artnet_node n, options_t *options) {
     }
   }
 }
-
 int main(int argc, char *argv[]) {
   artnet_node node;
   options_t options;
